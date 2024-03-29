@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-plusplus */
 class Gameboard {
   constructor(size = 10) {
     this.numShip = 0;
@@ -11,68 +13,69 @@ class Gameboard {
 
   placeShip(ship, startCoord, isHorizontal) {
     if (isHorizontal) {
-      //horizontal placement
-      //boundarycheck
+      // horizontal placement
+      // boundarycheck
       if (ship.size + startCoord.x - 1 >= this.boardSize) {
-        console.error("Ship placement out of range!");
-        return new Error("Out of Range");
+        console.error('Ship placement out of range!');
+        return;
       }
-      //overlay check
-      const y = startCoord.y;
-      for (let x = startCoord.x; x < startCoord.x + ship.size; x++) {
+      // overlay check
+      const { y } = startCoord;
+      for (let { x } = startCoord; x < startCoord.x + ship.size; x++) {
         if (this.board[y][x] != null) {
-          return new Error("Ship already placed");
+          return;
         }
       }
-      //actual placement
-      for (let x = startCoord.x; x < startCoord.x + ship.size; x++) {
+      // actual placement
+      for (let { x } = startCoord; x < startCoord.x + ship.size; x++) {
         this.board[y][x] = ship;
       }
-      this.numShip++;
+      this.numShip += 1;
     } else {
-      //vertical placement
-      //boundarycheck
+      // vertical placement
+      // boundarycheck
       if (ship.size + startCoord.y - 1 >= this.boardSize) {
-        console.error("Ship placement out of range!");
-        return new Error("Out of Range");
+        console.error('Ship placement out of range!');
+        return;
       }
 
-      //overlay check
-      const x = startCoord.x;
-      for (let y = startCoord.y; y < startCoord.x + ship.size; y++) {
+      // overlay check
+      const { x } = startCoord;
+      for (let { y } = startCoord; y < startCoord.x + ship.size; y++) {
         if (this.board[y][x] != null) {
-          return new Error("Ship already placed");
+          return;
         }
       }
-      //actual placement
-      for (let y = startCoord.y; y < startCoord.x + ship.size; y++) {
+      // actual placement
+      for (let { y } = startCoord; y < startCoord.x + ship.size; y++) {
         this.board[y][x] = ship;
       }
-      this.numShip++;
+      this.numShip += 1;
     }
   }
+
   receiveAttack(coord) {
     // check coord has ship
-    const x = coord.x;
-    const y = coord.y;
+    const { x } = coord;
+    const { y } = coord;
 
     if (this.atkHist.includes({ x, y })) {
-      //Already attacked!
+      // Already attacked!
       return;
     }
     this.atkHist.push({ x, y });
 
     if (!this.board[y][x]) {
-      //Missed!
+      // Missed!
       this.missedAtk.push({ x, y });
       return;
     }
 
-    let ship = this.board[y][x];
+    const ship = this.board[y][x];
     ship.hit();
     if (ship.isSunk()) {
       this.sunkenShip.push(ship);
-      if (this.sunkenShip.length == this.numShip) {
+      if (this.sunkenShip.length === this.numShip) {
         this.allSunk = true;
       }
     }

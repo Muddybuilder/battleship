@@ -1,11 +1,12 @@
-const { Ship } = require("./ship");
-const { Gameboard } = require("./board");
+/* eslint-disable linebreak-style */
+const { Ship } = require('./ship');
+const { Gameboard } = require('./board');
 
-test("Test Ship hit", () => {
-  testBoardObj = new Gameboard();
-  testShipObj = new Ship("Submarine");
-  let x = 0;
-  let y = 0;
+test('Test Ship hit', () => {
+  const testBoardObj = new Gameboard();
+  const testShipObj = new Ship('Submarine');
+  const x = 0;
+  const y = 0;
 
   testBoardObj.placeShip(testShipObj, { x, y }, true);
 
